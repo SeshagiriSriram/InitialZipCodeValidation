@@ -18,7 +18,16 @@ function ZipCodeValidator() {
       setResult({ isValid: false, error: "Empty response from server" });
     }
   } else {
-    setResult({ isValid: false, error: `HTTP ${response.status}` });
+	  const errorText = await response.text();
+	  let message = `HTTP ${response.status}: `;
+	    try {
+    const json = JSON.parse(errorText);
+    message += json.error; // <-- extract only the error message
+  } catch {
+    // fallback if server didn't send JSON
+    message += errorText;
+  }
+    setResult({ isValid: false, error: message});
   }
   };
   return (

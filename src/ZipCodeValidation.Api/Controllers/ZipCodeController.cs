@@ -11,10 +11,10 @@ namespace ZipCodeValidation.Api.Controllers
     [ApiController]
     public class ZipCodeController : ControllerBase
     {
-        private readonly ZipCodeValidationService _service;
-        public ZipCodeController(ZipCodeValidationService service)
+        private readonly IZipCodeValidationService _validationService;
+        public ZipCodeController(IZipCodeValidationService service)
         {
-            _service = service;
+            _validationService = service;
         }
         [HttpPost("validate")]
         public IActionResult Validate([FromBody] AddressDto dto)
@@ -23,12 +23,10 @@ namespace ZipCodeValidation.Api.Controllers
                 new ZipCode(dto.ZipCode),
                 new Locality(dto.Locality),
                 new State(dto.State),
-                new Country(dto.Country)
-            );
-            Console.WriteLine("Got address: "+dto.ZipCode);
+                new Country(dto.Country));
             try
             {
-                var result = _service.Validate(address);
+                var result = _validationService.Validate(address);
                 return Ok(new { isValid = result });
             }
             catch (DomainException ex)

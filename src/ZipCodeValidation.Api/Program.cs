@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using ZipCodeValidation.Application;
 using ZipCodeValidation.Domain.Interfaces;
-using ZipCodeValidation.Domain.Strategies;
+using ZipCodeValidation.Infrastructure.Strategies; 
 
 namespace ZipCodeValidation.Api
 {
@@ -39,9 +39,17 @@ namespace ZipCodeValidation.Api
             });
             // DEPENDENCY 
             //builder.Services.AddScoped<ZipCodeValidationService>();
+
+            // Register strategy implementation
             builder.Services.AddScoped<IZipCodeValidationStrategy, USZipCodeValidationStrategy>();
-            builder.Services.AddScoped<ZipCodeValidator>();
+
+            // Register service
             builder.Services.AddScoped<IZipCodeValidationService, ZipCodeValidationService>();
+
+            // Register validator if you want it injected separately
+            builder.Services.AddScoped<ZipCodeValidator>();
+
+
             var app = builder.Build();
             app.UseCors("AllowReactApp");
 

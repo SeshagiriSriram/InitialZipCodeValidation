@@ -5,7 +5,7 @@ using ZipCodeValidation.Domain.Entities;
 using ZipCodeValidation.Domain.Exceptions;
 using ZipCodeValidation.Domain.Interfaces;
 
-namespace ZipCodeValidation.Domain.Strategies
+namespace ZipCodeValidation.Infrastructure.Strategies
 {
     public class USZipCodeValidationStrategy:IZipCodeValidationStrategy
     {
