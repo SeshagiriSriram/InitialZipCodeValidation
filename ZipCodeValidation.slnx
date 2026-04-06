@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/ZipCodeValidation.Api/ZipCodeValidation.Api.csproj" Id="c231a44c-1ae1-4e33-abed-8fe0c98f7ee7" />
+  <Project Path="src/ZipCodeValidation.Application/ZipCodeValidation.Application.csproj" Id="9820af5c-afb5-42ca-bac9-a111f0fd149f" />
+  <Project Path="src/ZipCodeValidation.Domain/ZipCodeValidation.Domain.csproj" Id="249ae51d-4ea3-490b-aa3e-0c5ab8e9fd57" />
+  <Project Path="src/ZipCodeValidation.Infrastructure/ZipCodeValidation.Infrastructure.csproj" Id="2000ac90-d80b-422b-9c5d-55112fea0bc3" />
+  <Project Path="tests/ZipCodeValidation.Specs/ZipCodeValidation.Specs.csproj" Id="69397217-7cce-48a0-b7f5-584f9fb86df3" />
+  <Project Path="tests/ZipCodeValidation.UnitTests/ZipCodeValidation.UnitTests.csproj" Id="b73a96a8-39c0-4d84-8170-f9cc89cf6ea7" />
+</Solution>
