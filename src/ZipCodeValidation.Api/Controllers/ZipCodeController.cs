@@ -49,6 +49,14 @@ namespace ZipCodeValidation.Api.Controllers
                     error = ex.Message
                 });
             }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    isValid = false,
+                    error = ex.Message
+                });
+            }
         }
 
     }

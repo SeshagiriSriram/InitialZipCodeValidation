@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using ZipCodeValidation.Application;
 using ZipCodeValidation.Domain.Interfaces;
+using ZipCodeValidation.Infrastructure;
 using ZipCodeValidation.Infrastructure.Strategies; 
 
 namespace ZipCodeValidation.Api
@@ -41,12 +42,13 @@ namespace ZipCodeValidation.Api
             //builder.Services.AddScoped<ZipCodeValidationService>();
 
             // Register strategy implementation
-            builder.Services.AddScoped<IZipCodeValidationStrategy, USZipCodeValidationStrategy>();
+            //builder.Services.AddScoped<IZipCodeValidationStrategy, USZipCodeValidationStrategy>();
 
             // Register service
-            builder.Services.AddScoped<IZipCodeValidationService, ZipCodeValidationService>();
+            //builder.Services.AddScoped<IZipCodeValidationService, ZipCodeValidationService>();
 
             // Prior to 8, you could do .SCAN
+            /*
             var strategyType = typeof(IZipCodeValidationStrategy);
             var implementations = strategyType.Assembly
                 .GetTypes()
@@ -55,12 +57,20 @@ namespace ZipCodeValidation.Api
                             && !t.IsAbstract);
                 foreach (var impl in implementations)
                 {
-                builder.Services.AddScoped(strategyType, impl);
+                builder.Services.AddTransient(strategyType, impl);
                 }
+                */
+            typeof(USZipCodeValidationStrategy).Assembly
+    .GetTypes()
+    .Where(t => typeof(IZipCodeValidationStrategy).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+    .ToList()
+    .ForEach(impl => builder.Services.AddTransient(typeof(IZipCodeValidationStrategy), impl));
 
             // Register validator if you want it injected separately
-            builder.Services.AddScoped<IZipCodeValidator,ZipCodeValidator>();
+            //builder.Services.AddScoped<IZipCodeValidator,ZipCodeValidator>();
 
+            builder.Services.AddSingleton<IZipCodeValidationStrategyFactory, ZipCodeValidationStrategyFactory>();
+            builder.Services.AddTransient<IZipCodeValidationService, ZipCodeValidationService>();
 
             var app = builder.Build();
             app.UseCors("AllowReactApp");

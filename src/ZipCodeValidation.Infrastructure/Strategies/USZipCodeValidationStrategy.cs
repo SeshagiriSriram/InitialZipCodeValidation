@@ -12,8 +12,12 @@ namespace ZipCodeValidation.Infrastructure.Strategies
     {
         public Country Country => new("US");
 
+        public bool CanHandle(string countryCode) =>
+            string.Equals(countryCode, "US", StringComparison.OrdinalIgnoreCase);
         public ValidationResult Validate(Address address)
         {
+            Console.WriteLine("US Validator");
+
             // Example: 55113 belongs to MN, not CA 
             // This is where you will validate based on length, chars and/or mapping 
             if (address.ZipCode.Value == "55113" &&
