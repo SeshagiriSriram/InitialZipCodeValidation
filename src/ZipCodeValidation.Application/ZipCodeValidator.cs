@@ -5,25 +5,33 @@ using System.Text;
 using ZipCodeValidation.Domain.ValueObjects; 
 namespace ZipCodeValidation.Application
 {
-    using ZipCodeValidation.Domain.Entities; 
+    using System.Diagnostics.Metrics;
+    using ZipCodeValidation.Domain.Entities;
+    using ZipCodeValidation.Domain.Exceptions;
     using ZipCodeValidation.Domain.Interfaces;
     public class ZipCodeValidator: IZipCodeValidator
     {
-        private readonly IZipCodeValidationStrategy _strategy;
-        public ZipCodeValidator(IZipCodeValidationStrategy strategy)
+        //private readonly IZipCodeValidationStrategy _strategy;
+        private readonly IEnumerable<IZipCodeValidationStrategy> _strategies;
+        //public ZipCodeValidator(IZipCodeValidationStrategy strategy)
+        public ZipCodeValidator(IEnumerable<IZipCodeValidationStrategy> strategies)
         {
-            Console.WriteLine("Validator Constructor called. strategy is null? " + (strategy == null));
-
-            _strategy = strategy;
+            //Console.WriteLine("Validator Constructor called. strategy is null? " + (strategy == null));
+            //_strategy = strategy;
+            _strategies = strategies; 
         }
         public ValidationResult Validate(Address address)
         {
-            Console.WriteLine("Calling validate()");
-            if(_strategy==null)
-            {
-                Console.WriteLine("Strategy is null"); 
-            }
-            return _strategy.Validate(address);
+            //Console.WriteLine("Calling validate()");
+            //if(_strategy==null)
+            //{
+            // Console.WriteLine("Strategy is null"); 
+            //}
+            var strategy = _strategies.FirstOrDefault(s => s.Country == address.Country);
+            if (strategy == null)
+                throw new DomainException($"No strategy found for country {address.Country}");
+            return strategy.Validate(address);
+
         }
 
     }

@@ -46,6 +46,18 @@ namespace ZipCodeValidation.Api
             // Register service
             builder.Services.AddScoped<IZipCodeValidationService, ZipCodeValidationService>();
 
+            // Prior to 8, you could do .SCAN
+            var strategyType = typeof(IZipCodeValidationStrategy);
+            var implementations = strategyType.Assembly
+                .GetTypes()
+                .Where(t => strategyType.IsAssignableFrom(t)
+                            && t.IsClass
+                            && !t.IsAbstract);
+                foreach (var impl in implementations)
+                {
+                builder.Services.AddScoped(strategyType, impl);
+                }
+
             // Register validator if you want it injected separately
             builder.Services.AddScoped<IZipCodeValidator,ZipCodeValidator>();
 

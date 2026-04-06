@@ -8,5 +8,6 @@ namespace ZipCodeValidation.Domain.Interfaces
     public interface IZipCodeValidationStrategy
     {
         ValidationResult Validate(Address address); // Step #1
+        Country Country { get; }    
     }
 }
