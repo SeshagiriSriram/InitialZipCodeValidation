@@ -47,7 +47,7 @@ namespace ZipCodeValidation.Api
             builder.Services.AddScoped<IZipCodeValidationService, ZipCodeValidationService>();
 
             // Register validator if you want it injected separately
-            builder.Services.AddScoped<ZipCodeValidator>();
+            builder.Services.AddScoped<IZipCodeValidator,ZipCodeValidator>();
 
 
             var app = builder.Build();

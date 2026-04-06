@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ZipCodeValidation.Application;
 using ZipCodeValidation.Domain.Entities;
@@ -27,11 +28,26 @@ namespace ZipCodeValidation.Api.Controllers
             try
             {
                 var result = _validationService.Validate(address);
-                return Ok(new { isValid = result });
+                if (result.IsValid)
+                {
+                    return Ok(new { isValid = true });
+                }
+                else
+                {
+                    return BadRequest(new
+                    {
+                        isValid = false,
+                        error = result.Error
+                    });
+                }
             }
             catch (DomainException ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(new
+                {
+                    isValid = false,
+                    error = ex.Message
+                });
             }
         }
 

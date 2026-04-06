@@ -5,8 +5,9 @@ using ZipCodeValidation.Domain.Entities;
 using ZipCodeValidation.Domain.ValueObjects;
 namespace ZipCodeValidation.Application
 {
-    public  interface IZipCodeValidationService
+    public interface IZipCodeValidator
     {
-        public ValidationResult Validate(Address address); 
+        ValidationResult Validate(Address address);
+
     }
 }

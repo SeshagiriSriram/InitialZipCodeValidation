@@ -9,6 +9,6 @@ namespace ZipCodeValidation.Domain.ValueObjects
     public record Locality(string Code);
     public record State(string Code);
     public record Country(string Code);
-
+    public sealed record ValidationResult(bool IsValid, string? Error);
 
 }

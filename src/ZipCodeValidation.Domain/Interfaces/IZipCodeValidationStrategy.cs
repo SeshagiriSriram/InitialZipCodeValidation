@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using ZipCodeValidation.Domain.Entities;
-
+using ZipCodeValidation.Domain.ValueObjects; 
 namespace ZipCodeValidation.Domain.Interfaces
 {
     public interface IZipCodeValidationStrategy
     {
-        void Validate(Address address); // Step #1
+        ValidationResult Validate(Address address); // Step #1
     }
 }
